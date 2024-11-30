@@ -1,34 +1,39 @@
-module memory(clk, instruction_data_in ,data_in, data_out, opcode, address_out, address_in, read, write);
-input clk, read, write;
-input[7:0] instruction_data_in;
-input[7:0] data_in;
-input[4:0] address_in;
-output reg[7:0] data_out;
-output reg[2:0] opcode;
-output reg[4:0] address_out;
+module memory(
+    input wire clk,
+    input wire write_en,
+    input wire [4:0] address, // 5-bit address for 32 memory locations
+    inout wire [7:0] data
+);
 
+    reg [7:0] mem [31:0]; // 32 bytes of memory (16 for instructions and 16 for data)
+    reg [7:0] data_out;   // Register to hold output data
+    reg data_enable;      // Signal to enable output data
 
-reg[7:0] mem [31:0];
-initial begin
-    	$readmemb("memory_data.mem", mem); // Load binary file
-end
+    // Load initial values from files
+    initial begin
+        $readmemb("./instruction.mem", mem, 0, 15);
+        $readmemb("./data.mem", mem, 16, 31);
+    end
 
+    // Tri-state buffer for inout port
+    assign data = (data_enable) ? data_out : 8'bz;
 
-always@(posedge clk) begin
-	if(mem[address_in][7:5] == 3'b110) 
-		mem[mem[address_in][4:0]] <= data_in;		
-	else begin
-		opcode <= mem[address_in][7:5];
-		address_out <= mem[address_in][4:0];
-		case(mem[address_in][7:5])
-			3'b110: out <= out;
-			3'b111: out <= out;
-		endcase
-	end	
-end
+    always @(posedge clk) begin
+        if (write_en) begin
+            // Write operation
+            mem[address] <= data;
+            data_enable <= 0; // Disable output during write
+        end else begin
+            // Read operation
+            data_out <= mem[address];
+            data_enable <= 1; // Enable output during read
+        end
+    end
 
-always@(posedge clk) begin
-	s
-end
+    // Save data memory to file for simulation purposes
+    always @(posedge clk) begin
+        $writememb("./data.mem", mem, 16, 31);
+    end
 
 endmodule
+
