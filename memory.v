@@ -1,32 +1,28 @@
 module memory(
     input wire clk,
     input wire write_en,
-    input wire [4:0] address, // 5-bit address for 32 memory locations
+    input wire [4:0] address, 
     inout wire [7:0] data
 );
+    reg [7:0] mem [31:0]; 
+    reg [7:0] data_out;
+   // reg data_enable;  
 
-    reg [7:0] mem [31:0]; // 32 bytes of memory (16 for instructions and 16 for data)
-    reg [7:0] data_out;   // Register to hold output data
-    reg data_enable;      // Signal to enable output data
-
-    // Load initial values from files
     initial begin
         $readmemb("./instruction.mem", mem, 0, 15);
         $readmemb("./data.mem", mem, 16, 31);
     end
 
     // Tri-state buffer for inout port
-    assign data = (data_enable) ? data_out : 8'bz;
+    assign data = (!write_en) ? data_out : 8'bz;
 
     always @(posedge clk) begin
         if (write_en) begin
-            // Write operation
+            //write 
             mem[address] <= data;
-            data_enable <= 0; // Disable output during write
         end else begin
-            // Read operation
-            data_out <= mem[address];
-            data_enable <= 1; // Enable output during read
+	    //read
+            data_out = mem[address];
         end
     end
 

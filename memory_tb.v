@@ -1,11 +1,10 @@
 `timescale 1ns/1ps
 module memory_tb;
     reg clk;
-    reg [4:0] address;       // Match the `address` width in the DUT
-    reg [7:0] data_in;       // Separate signal for driving data
-    wire [7:0] data;         // Connect as inout to DUT
+    reg [4:0] address;      
+    reg [7:0] data_in;     
+    wire [7:0] data;      
     reg write_en;
-    reg data_dir;            // Signal to control data direction for testbench
 
     // Instantiate the memory module
     memory u_memory (
@@ -15,10 +14,8 @@ module memory_tb;
         .write_en(write_en)
     );
 
-    // Tri-state buffer for simulating bidirectional data
-    assign data = (data_dir) ? data_in : 8'bz;
+    assign data = data_in;
 
-    // Generate VCD file for waveform analysis
     initial begin
         $dumpfile("memory.vcd");
         $dumpvars(0, memory_tb);
@@ -36,26 +33,23 @@ module memory_tb;
         address = 5'b00000;
         data_in = 8'b00000000;
         write_en = 0;
-        data_dir = 0;
 
         // Write operation
         #50;
         address = 5'b10001;   // Write to address 17
         data_in = 8'b11111111;
-        data_dir = 1;         // Drive data
         write_en = 1;         // Enable write
         #50;
-        //write_en = 0;         // Disable write
-        //data_dir = 0;         // Release data line
+        write_en = 0;         // Disable write
 
         // Read operation
         #100;
-        //address = 5'b10001;   // Read from address 17
-        //write_en = 0;         // Ensure write is disabled
+        address = 5'b10001;   // Read from address 17
+        write_en = 0;         // Ensure write is disabled
         #50;
 
         // End simulation
-        #200;
+        #2000;
         $finish;
     end
 endmodule
