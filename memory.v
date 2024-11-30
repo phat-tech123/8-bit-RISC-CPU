@@ -6,14 +6,12 @@ module memory(
 );
     reg [7:0] mem [31:0]; 
     reg [7:0] data_out;
-   // reg data_enable;  
 
     initial begin
         $readmemb("./instruction.mem", mem, 0, 15);
         $readmemb("./data.mem", mem, 16, 31);
     end
 
-    // Tri-state buffer for inout port
     assign data = (!write_en) ? data_out : 8'bz;
 
     always @(posedge clk) begin
@@ -26,7 +24,7 @@ module memory(
         end
     end
 
-    // Save data memory to file for simulation purposes
+    // Save data memory to file
     always @(posedge clk) begin
         $writememb("./data.mem", mem, 16, 31);
     end
