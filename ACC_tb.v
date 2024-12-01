@@ -15,12 +15,6 @@ initial begin
 	$dumpvars(0, ACC_tb);
 end
 
-initial begin
-	forever begin 
-		clk = #25 ~clk;
-	end
-end
-
 initial begin 
 	clk = 0;
 	in = 8'b00000000;
@@ -30,5 +24,11 @@ initial begin
 	in = 8'b10000001;
 	#200;
 end
+initial begin
+	forever begin 
+		clk = #25 ~clk;
+	end
+end
+
 
 endmodule
