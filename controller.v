@@ -9,7 +9,10 @@ module controller(
 	output reg [1:0] ALU_Op;
 );
 
+reg [2:0] counter;
+
 always@(posedge clk) begin
+	if(counter == 3'b0) begin
 	case(opcode)
 		3'b000:
 			write_en <= 1'b0;
@@ -67,6 +70,9 @@ always@(posedge clk) begin
 			ALUToACC <= 1'b0;
 			branch <= 1'b1;
 			ALU_Op <= 2'b00;
+	end
+end else begin
+	counter <= counter - 1;
 end
 	
 endmodule;
