@@ -16,12 +16,15 @@ always@(posedge clk) begin
 		opcode <= data[7:5];
 		address <= data[4:0];
 		case(data[7:5])
+			3'b000: counter <= 3'd0;
+			3'b001: counter <= 3'd2;
 			3'b010: counter <= 3'd5;
 			3'b011: counter <= 3'd5;
 			3'b100: counter <= 3'd5;
 			3'b101: counter <= 3'd5;
 			3'b110: counter <= 3'd4;
-			default: counter <= 3'd3;
+			3'b111: counter <= 3'd3;
+			default: counter <= 3'd0;
 		endcase
 	end else
 		counter <= counter - 1;
