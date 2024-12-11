@@ -19,6 +19,7 @@ wire [4:0] instruction_address;	//Next Address
 wire [7:0] data;
 wire [7:0] ACC_data;
 wire [7:0] data_out;
+wire [7:0] data_toACC;
 wire isZero;
 
 wire opcode;
@@ -103,7 +104,29 @@ ALU ALU_u(
 
 and and_u(skip_signal, skip, isZero);
 
+dataMux dataMux_u(
+	.ALU_data(data_out),
+	.MEM_data(data),
+	.ALUToACC(ALUToACC),
+	.data_out(data_toACC)
+);
 
+
+endmodule
+
+module dataMux(
+    input wire [7:0] ALU_data,  
+    input wire [7:0] MEM_data,   
+    input wire ALUToACC,        
+    output reg [7:0] data_out 
+);
+
+always @(*) begin
+    if (ALUToACC)
+        data_out = ALU_data;  
+    else
+        data_out = MEM_data; 
+end
 
 endmodule
 
