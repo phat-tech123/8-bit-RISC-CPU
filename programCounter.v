@@ -15,13 +15,13 @@ endmodule
 module ADD_Mux(
 	input wire skip_signal,
 	input wire [4:0] address,
-	output wire [4:0] next_addres
+	output wire [4:0] next_address
 );
 always@(*) begin
 	if(skip_signal)
-		next_addres <= address + 2;
+		next_address = address + 5'd2;
 	else
-		next_addres <= address + 1;
+		next_address = address + 5'd1;
 end
 
 endmodule
