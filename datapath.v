@@ -1,41 +1,39 @@
 `include "memory.v"
 `include "IR.v"
 `include "ACC.v"
-`include "ProgramCounter.v"
+`include "programCounter.v"
 `include "controller.v"
 `include "AddressMux.v"
 `include "ALU.v"
 
 module Datapath_Unit(
 	input wire clk,
-	input wire rst,
+	input wire rst
 );
 
-reg  [4:0] address_in; 		//Address loaded to Program Counter
+wire [4:0] address_in; 		//Address loaded to Program Counter
 wire [4:0] address_out; 	//Address out from Program Counter
-wire [4:0] address; 		//Address out from Instruction Register
-wire [4:0] instruction_address;	//Next Address 
+wire [4:0] instruction_address;	 
+wire [4:0] data_address;
 
 wire [7:0] data;
 wire [7:0] ACC_data;
 wire [7:0] data_out;
-wire [7:0] data_toACC;
+wire [7:0] dataToACC;
+
 wire isZero;
 
-wire opcode;
+wire [2:0] opcode;
+wire stop;
 wire write_en;
 wire skip;
 wire regWrite;
 wire ALUToACC;
-wire branch;
+wire PC_addr;
+wire PC_actve;
 wire [1:0] ALU_Op;
 
 wire skip_signal; 
-
-
-initial begin 
-	address_in = 5'b0;
-end
 
 // Memory
 memory memory_u(
@@ -44,32 +42,33 @@ memory memory_u(
 	.address(address_out),
 	.data(data)
 );
-
+assign data = (write_en) ? ACC_data : 8'bz;
 // Register
-IR IR_u(
+instructionRegister IR_u(
 	.clk(clk),
 	.data(data),
 	.opcode(opcode),
-	.address(address)
+	.address(data_address)
 );
 
 ACC ACC_u(
 	.clk(clk),
 	.regWrite(regWrite),
-	.in(),
-	.out()
+	.in(dataToACC),
+	.out(ACC_data)
 );
 
 // Controller
 controller controller_u(
 	.clk(clk),
 	.opcode(opcode),
-	.opcode(opcode),
+	.stop(stop),
 	.write_en(write_en),
 	.skip(skip),
 	.regWrite(regWrite),
 	.ALUToACC(ALUToACC),
-	.branch(branch),
+	.PC_addr(PC_addr),
+	.PC_actve(PC_actve),
 	.ALU_Op(ALU_Op)
 );
 
@@ -88,9 +87,10 @@ ADD_Mux ADD_Mux_u(
 
 // A
 AddressMux AddressMux_u(
-	.data_signal(branch),
+	.PC_addr(PC_addr),
+	.PC_actve(PC_actve),
 	.instruction_address(instruction_address),
-	.data_address(address),
+	.data_address(data_address),
 	.address(address_in)
 );
 
@@ -108,7 +108,7 @@ dataMux dataMux_u(
 	.ALU_data(data_out),
 	.MEM_data(data),
 	.ALUToACC(ALUToACC),
-	.data_out(data_toACC)
+	.data_out(dataToACC)
 );
 
 
