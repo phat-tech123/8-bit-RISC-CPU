@@ -6,15 +6,13 @@ module storage(
 );
 
 reg [2:0] counter;
-reg [4:0] out;
-reg [4:0] out1;
 initial begin
 	counter <= 3'd0;
 end
 
 always@(posedge clk) begin
 	if(counter == 3'd0) begin
-		out <= address;
+		out_address <= address;
 		case(opcode)
 			3'b000: counter = 3'd0;
 			3'b001: counter = 3'd3;
@@ -30,8 +28,4 @@ always@(posedge clk) begin
 	end
 end
 
-always@(posedge clk) begin
-	out1 <= out;
-	out_address <= out1;
-end
 endmodule

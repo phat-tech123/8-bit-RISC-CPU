@@ -118,7 +118,10 @@ storage storage_u(
 AddressMux AddressMux_u(
 	.PC_addr(PC_addr),
 	.PC_actve(PC_actve),
+	.skip_signal(skip_signal),
+	.skip(skip),
 	.instruction_address(instruction_address),
+	.skip_address(skip_address),
 	.data_address(skip_data_address),
 	.address(address_in)
 );
