@@ -21,19 +21,33 @@ always @(posedge clk or posedge rst) begin
 end
 endmodule
 
-module ADD_Mux(
-   	input wire skip_signal, 
-	input wire nonAdd,
+module Adder_1(
     	input wire [4:0] address, 
     	output reg [4:0] next_address 
 );
 always @(*) begin
-	if(nonAdd) 
-		next_address = address;    	//Load data
-	else if (skip_signal)
-	    next_address = address + 5'd2; 	// skip by 2
-	else
 	    next_address = address + 5'd1; 	// increment by 1
 end
 endmodule
 
+module Adder_2(
+    	input wire [4:0] address, 
+    	output reg [4:0] next_address 
+);
+always @(*) begin
+	    next_address = address + 5'd2; 	// increment by 1
+end
+endmodule
+
+module skip_data_mux(
+	input wire [4:0] inA, 
+	input wire [4:0] inB,
+	input wire skip_signal,
+	output reg [4:0] skip_data_address
+);
+
+always @(*) begin
+	skip_data_address = (skip_signal) ? inA : inB;
+end
+
+endmodule

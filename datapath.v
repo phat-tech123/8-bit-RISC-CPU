@@ -5,16 +5,21 @@
 `include "controller.v"
 `include "AddressMux.v"
 `include "ALU.v"
+`include "storage.v"
 
 module Datapath_Unit(
 	input wire clk,
-	input wire rst
+	input wire rst,
+	output reg [7:0] fpga_data
 );
 
 wire [4:0] address_in; 		//Address loaded to Program Counter
 wire [4:0] address_out; 	//Address out from Program Counter
 wire [4:0] instruction_address;	 
 wire [4:0] data_address;
+wire [4:0] out_address;
+wire [4:0] skip_address;
+wire [4:0] skip_data_address;
 
 wire [7:0] data;
 wire [7:0] ACC_data;
@@ -34,6 +39,10 @@ wire PC_actve;
 wire [1:0] ALU_Op;
 
 wire skip_signal; 
+
+always@(posedge clk) begin
+	fpga_data <= ACC_data;
+end
 
 // Memory
 memory memory_u(
@@ -80,10 +89,29 @@ PC PC_u(
 	.loaded_address(address_in),
 	.address(address_out)
 );
-ADD_Mux ADD_Mux_u(
-	.skip_signal(skip_signal),
-	.address(address_out),
+
+Adder_1 Adder_1_u(
+	.address(out_address),
 	.next_address(instruction_address)
+);
+
+Adder_2 Adder_2_u(
+	.address(address_out),
+	.next_address(skip_address)
+);
+
+skip_data_mux skip_data_mux_u(
+	.inA(skip_address),
+	.inB(data_address),
+	.skip_signal(skip_signal),
+	.skip_data_address(skip_data_address)
+);
+
+storage storage_u(
+	.clk(clk),
+	.address(address_out),
+	.opcode(opcode),
+	.out_address(out_address)
 );
 
 // A
@@ -91,8 +119,7 @@ AddressMux AddressMux_u(
 	.PC_addr(PC_addr),
 	.PC_actve(PC_actve),
 	.instruction_address(instruction_address),
-	.data_address(data_address),
-	.stayed_address(address_out),
+	.data_address(skip_data_address),
 	.address(address_in)
 );
 
@@ -104,7 +131,11 @@ ALU ALU_u(
 	.out(data_out)
 );
 
-and and_u(skip_signal, skip, isZero);
+skip_AND skip_AND_u(
+	skip, 
+	ACC_data,
+	skip_signal
+);
 
 
 
@@ -135,3 +166,13 @@ end
 endmodule
 
 
+module skip_AND(
+    input wire inA,
+    input wire [7:0] inB,
+    output wire out
+);
+
+    // Continuous assignment instead of always block
+    assign out = inA && ~(|inB);
+
+endmodule

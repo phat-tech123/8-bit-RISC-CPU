@@ -64,12 +64,13 @@ always@(posedge clk) begin
 			skip 	 <= 	1'b1;
 			regWrite <= 	1'b0;
 			ALUToACC <= 	1'b0;
-			PC_addr  <= 	1'b0;
+			PC_addr  <= 	1'b1;
 			PC_actve <= 	1'b1;	
 			ALU_Op 	 <= 	2'b00;
 			counter1 <= 	2'd0;
 			counter2 <= 	2'd0;
-			counter3 <= 	2'd1;
+			counter3 <= 	2'd0;
+			counter  <= 	2'd3;
 		end
 		ADD: begin
 			stop 	 <= 	1'b0;
@@ -163,7 +164,8 @@ end
 
 always@(negedge clk) begin
 	if(counter1 == 2'd0) begin
-		regWrite = 1'b0;
+		regWrite <= 1'b0;
+		skip <= 1'b0;
 	end else begin
 		counter1 = counter1 - 1;
 	end
