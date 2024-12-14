@@ -1,6 +1,7 @@
 module controller(
     input wire clk,
     input wire [2:0] opcode,
+    output reg nonAdd,
     output reg stop,
     output reg write_en,
     output reg skip,
@@ -11,7 +12,8 @@ module controller(
     output reg [1:0] ALU_Op
 );
 
-reg [1:0] counter1; 	// For Accumulator Register
+reg [2:0] counter; 	// For Controller
+reg [2:0] counter1; 	// For Accumulator Register
 reg [1:0] counter2; 	// For PC_addr  
 reg [1:0] counter3; 	// For PC_actve 
 
@@ -37,9 +39,11 @@ initial begin
 	counter1  <= 2'b00;
 	counter2  <= 2'b00;
 	counter3  <= 2'b00;
+	counter   <= 3'b000; 
 end
 
 always@(posedge clk) begin
+	if(counter == 3'b000) begin
 	case(opcode)
 		HLT: begin
 			stop 	 <= 	1'b1;
@@ -79,6 +83,7 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter  <= 	3'd5;
 		end
 		AND: begin
 			stop 	 <= 	1'b0;
@@ -92,6 +97,7 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter  <= 	3'd5;
 		end	
 		XOR: begin
 			stop 	 <= 	1'b0;
@@ -105,8 +111,10 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter  <= 	3'd5;
 		end
 		LDA: begin
+			nonAdd 	 <= 	1'b1;
 			stop 	 <= 	1'b0;
 			write_en <= 	1'b0;
 			skip 	 <= 	1'b0;
@@ -115,9 +123,10 @@ always@(posedge clk) begin
 			PC_addr  <= 	2'b1;
 			PC_actve <= 	1'b1;
 			ALU_Op 	 <= 	2'b00;
-			counter1 <=   	2'd3;
+			counter1 <=   	3'd4;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter  <= 	3'd5;
 		end
 		STO: begin
 			stop 	 <= 	1'b0;
@@ -142,10 +151,14 @@ always@(posedge clk) begin
 			PC_actve <=  	1'b1;
 			ALU_Op 	 <= 	2'b00;
 			counter1 <= 	2'd0; 
-			counter2 <= 	2'd0;
+			counter2 <= 	2'd1;
 			counter3 <= 	2'd1;
+			counter  <= 	3'd3;
 		end
 	endcase
+	end else begin
+		counter = counter - 1;
+	end
 end
 
 always@(negedge clk) begin

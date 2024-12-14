@@ -76,6 +76,7 @@ controller controller_u(
 PC PC_u(
 	.clk(clk),
 	.rst(rst),
+	.stop(stop),
 	.loaded_address(address_in),
 	.address(address_out)
 );
@@ -91,6 +92,7 @@ AddressMux AddressMux_u(
 	.PC_actve(PC_actve),
 	.instruction_address(instruction_address),
 	.data_address(data_address),
+	.stayed_address(address_out),
 	.address(address_in)
 );
 
@@ -103,6 +105,8 @@ ALU ALU_u(
 );
 
 and and_u(skip_signal, skip, isZero);
+
+
 
 dataMux dataMux_u(
 	.ALU_data(data_out),
@@ -129,4 +133,5 @@ always @(*) begin
 end
 
 endmodule
+
 
