@@ -6,8 +6,9 @@ module ACC(
 );
 
 always@(posedge clk) begin
-	if(regWrite)
+	if(regWrite) begin
 		out <= in;
+	end
 end
 
 endmodule

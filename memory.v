@@ -24,6 +24,11 @@ always @(posedge clk) begin
 end
 
 // Save data memory to file
+always@(posedge clk) begin
+	if(address == 8'bz) begin
+		$writememb("./data.mem", mem, 0, 31);
+	end
+end
 
 endmodule
 
