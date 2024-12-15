@@ -16,6 +16,7 @@ reg [2:0] counter; 	// For Controller
 reg [2:0] counter1; 	// For Accumulator Register
 reg [1:0] counter2; 	// For PC_addr  
 reg [1:0] counter3; 	// For PC_actve 
+reg [1:0] counter4; 	// For write_en
 
 localparam HLT = 3'b000;
 localparam SKZ = 3'b001;
@@ -39,6 +40,7 @@ initial begin
 	counter1  <= 2'b00;
 	counter2  <= 2'b00;
 	counter3  <= 2'b00;
+	counter4  <= 2'b00;
 	counter   <= 3'b000; 
 end
 
@@ -57,6 +59,8 @@ always@(posedge clk) begin
 			counter1 <= 	2'd0;
 			counter2 <= 	2'd0;
 			counter3 <= 	2'd0;
+			counter4 <= 	2'd0;
+			counter  <= 	3'd0;
 		end
 		SKZ: begin
 			stop 	 <= 	1'b0;
@@ -70,7 +74,8 @@ always@(posedge clk) begin
 			counter1 <= 	2'd0;
 			counter2 <= 	2'd0;
 			counter3 <= 	2'd0;
-			counter  <= 	2'd3;
+			counter4 <= 	2'd0;
+			counter  <= 	3'd3;
 		end
 		ADD: begin
 			stop 	 <= 	1'b0;
@@ -84,6 +89,7 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter4 <= 	2'd0;
 			counter  <= 	3'd5;
 		end
 		AND: begin
@@ -98,6 +104,7 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter4 <= 	2'd0;
 			counter  <= 	3'd5;
 		end	
 		XOR: begin
@@ -112,6 +119,7 @@ always@(posedge clk) begin
 			counter1 <=   	2'd3;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter4 <= 	2'd0;
 			counter  <= 	3'd5;
 		end
 		LDA: begin
@@ -127,6 +135,7 @@ always@(posedge clk) begin
 			counter1 <=   	3'd4;
 			counter2 <= 	2'd2;
 			counter3 <= 	2'd3;
+			counter4 <= 	2'd0;
 			counter  <= 	3'd5;
 		end
 		STO: begin
@@ -141,6 +150,8 @@ always@(posedge clk) begin
 			counter1 <=   	2'd0;
 			counter2 <= 	2'd1;
 			counter3 <= 	2'd2;
+			counter4 <= 	2'd1;
+			counter  <= 	3'd4;
 		end
 		JMP: begin
 			stop 	 <= 	1'b0;
@@ -154,6 +165,7 @@ always@(posedge clk) begin
 			counter1 <= 	2'd0; 
 			counter2 <= 	2'd1;
 			counter3 <= 	2'd1;
+			counter4 <= 	2'd0;
 			counter  <= 	3'd3;
 		end
 	endcase
@@ -163,7 +175,7 @@ always@(posedge clk) begin
 end
 
 always@(negedge clk) begin
-	if(counter1 == 2'd0) begin
+	if(counter1 == 3'd0) begin
 		regWrite <= 1'b0;
 		skip <= 1'b0;
 	end else begin
@@ -181,6 +193,13 @@ always@(negedge clk) begin
 	end else begin
 		counter3 = counter3 - 1;
 	end
+
+	if(counter4 == 2'd0) begin 
+		write_en = 1'b0;
+	end else begin 	
+		counter4 = counter4 - 1;
+	end
+
 end
 
 endmodule
