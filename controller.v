@@ -1,91 +1,90 @@
 module controller(
 	input wire clk;
 	input wire [2:0] opcode;
-	output reg write_en;
+	output reg jump;
 	output reg skip;
- 	output reg regWrite;
+ 	output reg memWrite;
+	output reg memRead;	
+	output reg ACCwrite;
 	output reg ALUToACC;
-	output reg branch;
-	output reg [1:0] ALU_Op;
+	output reg [1:0] ALU_OP;
+	output reg regWrite;
 );
 
-reg [2:0] counter;
-
 always@(posedge clk) begin
-	if(counter == 3'b0) begin
-		case(opcode)
-			3'b000:
-				write_en <= 1'b0;
-				skip <= 1'b1;
-				regWrite <= 1'b0;
-				ALUToACC <= 1'b0;
-				branch <= 1'b0;
-				ALU_Op <= 2'b00;
-				
-				counter <= 3'd:q 
-			3'b001:
-				write_en <= 1'b0;
-				skip <= 1'b1;
-				regWrite <= 1'b0;
-				ALUToACC <= 1'b0;
-				branch <= 1'b0;
-				ALU_Op <= 2'b00;
-				counter <= 
-			3'b010:
-				write_en <= 1'b0; 
-				skip <= 1'b0;
-				regWrite <= 1'b1;
-				ALUToACC <= 1'b1;
-				branch <= 1'b0;
-				ALU_Op <= 2'b01;
-	
-			3'b011:
-				write_en <= 1'b0; 
-				skip <= 1'b0;
-				regWrite <= 1'b1;
-				ALUToACC <= 1'b1;
-				branch <= 1'b0;
-				ALU_Op <= 2'b10;
-					
-			3'b100:
-				write_en <= 1'b0; 
-				skip <= 1'b0;
-				regWrite <= 1'b1;
-				ALUToACC <= 1'b1;
-				branch <= 1'b0;
-				ALU_Op <= 2'b11;
-			3'b101:
-				write_en <= 1'b0;
-				skip <= 1'b0;
-				regWrite <= 1'b1;
-				ALUToACC <= 1'b0; 
-				branch <= 1'b0;
-				ALU_Op <= 2'b00;
-			3'b110:
-				write_en <= 1'b1; 
-				skip <= 1'b0;
-				regWrite <= 1'b0;
-				ALUToACC <= 1'b0;
-				branch <= 1'b0;
-				ALU_Op <= 2'b00;
-			3'b111:
-				write_en <= 1'b0; 
-				skip <= 1'b0;
-				regWrite <= 1'b0;
-				ALUToACC <= 1'b0;
-				branch <= 1'b1;
-				ALU_Op <= 2'b00;
-		endcase
-	end else begin
-		write_en <= 1'b0; 
-		skip <= 1'b0;
-		regWrite <= 1'b0;
-		ALUToACC <= 1'b0;
-		branch <= 1'b0;
-		ALU_Op <= 2'b00;
-
-		counter <= counter - 1;
-	end
+	case(opcode)
+		3'b000:
+			jump 		<= 1'b0; 
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b0;
+			ACCwrite 	<= 1'b0;
+			ALUToACC 	<= 1'b0;
+			ALU_OP 		<= 1'b0;
+			regWrite 	<= 1'b0;
+		3'b001:
+			jump 		<= 1'b1;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b0;
+			ACCwrite 	<= 1'b0;
+			ALUToACC 	<= 1'b0;
+			ALU_OP 		<= 1'b0;
+			regWrite 	<= 1'b0;
+		3'b010:
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b1;
+			ACCwrite 	<= 1'b1;
+			ALUToACC 	<= 1'b1;
+			ALU_OP 		<= 2'b01;
+			regWrite 	<= 1'b1;
+		3'b011:
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b1;
+			ACCwrite 	<= 1'b1;
+			ALUToACC 	<= 1'b1;
+			ALU_OP 		<= 2'b10;
+			regWrite 	<= 1'b1;
+		3'b100:
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b1;
+			ACCwrite 	<= 1'b1;
+			ALUToACC 	<= 1'b1;
+			ALU_OP 		<= 2'b11;
+			regWrite 	<= 1'b1;
+		3'b101:
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b1;
+			ACCwrite 	<= 1'b1;
+			ALUToACC 	<= 1'b0;
+			ALU_OP 		<= 2'b00;
+			regWrite 	<= 1'b1;
+		3'b110:
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b1;
+			memRead 	<= 1'b0;
+			ACCwrite 	<= 1'b0;
+			ALUToACC 	<= 1'b0;
+			ALU_OP 		<= 2'b00;
+			regWrite 	<= 1'b0;
+		3'b111:
+			jump 		<= 1'b0;
+			skip 		<= 1'b1;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b0;
+			ACCwrite 	<= 1'b0;
+			ALUToACC 	<= 1'b0;
+			ALU_OP 		<= 1'b0;
+			regWrite 	<= 1'b0;
+	endcase
 end
-	
-endmodule;
+endmodule
