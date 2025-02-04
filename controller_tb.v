@@ -9,7 +9,6 @@ wire memRead;
 wire ACCwrite;
 wire ALUToACC;
 wire [1:0 ]ALU_OP; 
-wire regWrite;
 wire Halt;
 
 controller u_controller(.*);
@@ -30,7 +29,7 @@ initial begin
 	opcode = 3'b100;
 	#20;
 	opcode = 3'b000;
-	#2000;
+	#200;
 	$finish;
 end
 endmodule

@@ -8,7 +8,6 @@ module controller(
 	output reg ACCwrite,
 	output reg ALUToACC,
 	output reg [1:0] ALU_OP,
-	output reg regWrite,
 	output reg Halt
 );
 
@@ -31,7 +30,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b0;
 			ALUToACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
-			regWrite 	<= 1'b0;
 			Halt 		<= 1'b1;
 		end
 		SKZ: begin
@@ -42,7 +40,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b0;
 			ALUToACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
-			regWrite 	<= 1'b0;
 			Halt 		<= 1'b0;
 		end
 		ADD: begin
@@ -53,7 +50,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b1;
 			ALUToACC 	<= 1'b1;
 			ALU_OP 		<= 2'b01;
-			regWrite 	<= 1'b1;
 			Halt 		<= 1'b0;
 		end
 		AND: begin
@@ -64,7 +60,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b1;
 			ALUToACC 	<= 1'b1;
 			ALU_OP 		<= 2'b10;
-			regWrite 	<= 1'b1;
 			Halt 		<= 1'b0;
 		end
 		XOR: begin
@@ -75,7 +70,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b1;
 			ALUToACC 	<= 1'b1;
 			ALU_OP 		<= 2'b11;
-			regWrite 	<= 1'b1;
 			Halt 		<= 1'b0;
 		end
 		LDA: begin
@@ -86,7 +80,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b1;
 			ALUToACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
-			regWrite 	<= 1'b1;
 			Halt 		<= 1'b0;
 		end
 		STO: begin
@@ -97,7 +90,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b0;
 			ALUToACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
-			regWrite 	<= 1'b0;
 			Halt 		<= 1'b0;
 		end
 		JMP: begin
@@ -108,7 +100,6 @@ always@(posedge clk) begin
 			ACCwrite 	<= 1'b0;
 			ALUToACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
-			regWrite 	<= 1'b0;
 			Halt 		<= 1'b0;
 
 		end

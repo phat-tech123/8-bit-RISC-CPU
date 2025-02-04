@@ -1,5 +1,5 @@
 $date
-	Tue Feb  4 10:41:35 2025
+	Tue Feb  4 20:40:11 2025
 $end
 $version
 	Icarus Verilog
@@ -9,60 +9,57 @@ $timescale
 $end
 $scope module controller_tb $end
 $var wire 1 ! skip $end
-$var wire 1 " regWrite $end
-$var wire 1 # memWrite $end
-$var wire 1 $ memRead $end
-$var wire 1 % jump $end
-$var wire 1 & Halt $end
-$var wire 2 ' ALU_OP [1:0] $end
-$var wire 1 ( ALUToACC $end
-$var wire 1 ) ACCwrite $end
-$var reg 1 * clk $end
-$var reg 3 + opcode [2:0] $end
+$var wire 1 " memWrite $end
+$var wire 1 # memRead $end
+$var wire 1 $ jump $end
+$var wire 1 % Halt $end
+$var wire 2 & ALU_OP [1:0] $end
+$var wire 1 ' ALUToACC $end
+$var wire 1 ( ACCwrite $end
+$var reg 1 ) clk $end
+$var reg 3 * opcode [2:0] $end
 $scope module u_controller $end
-$var wire 1 * clk $end
-$var wire 3 , opcode [2:0] $end
-$var parameter 3 - ADD $end
-$var parameter 3 . AND $end
-$var parameter 3 / HLT $end
-$var parameter 3 0 JMP $end
-$var parameter 3 1 LDA $end
-$var parameter 3 2 SKZ $end
-$var parameter 3 3 STO $end
-$var parameter 3 4 XOR $end
-$var reg 1 ) ACCwrite $end
-$var reg 1 ( ALUToACC $end
-$var reg 2 5 ALU_OP [1:0] $end
-$var reg 1 & Halt $end
-$var reg 1 % jump $end
-$var reg 1 $ memRead $end
-$var reg 1 # memWrite $end
-$var reg 1 " regWrite $end
+$var wire 1 ) clk $end
+$var wire 3 + opcode [2:0] $end
+$var parameter 3 , ADD $end
+$var parameter 3 - AND $end
+$var parameter 3 . HLT $end
+$var parameter 3 / JMP $end
+$var parameter 3 0 LDA $end
+$var parameter 3 1 SKZ $end
+$var parameter 3 2 STO $end
+$var parameter 3 3 XOR $end
+$var reg 1 ( ACCwrite $end
+$var reg 1 ' ALUToACC $end
+$var reg 2 4 ALU_OP [1:0] $end
+$var reg 1 % Halt $end
+$var reg 1 $ jump $end
+$var reg 1 # memRead $end
+$var reg 1 " memWrite $end
 $var reg 1 ! skip $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b100 4
-b110 3
-b1 2
-b101 1
-b111 0
-b0 /
-b11 .
-b10 -
+b100 3
+b110 2
+b1 1
+b101 0
+b111 /
+b0 .
+b11 -
+b10 ,
 $end
 #0
 $dumpvars
-bx 5
-b1 ,
+bx 4
 b1 +
-0*
-x)
+b1 *
+0)
 x(
-bx '
-x&
+x'
+bx &
 x%
 x$
 x#
@@ -70,199 +67,52 @@ x"
 x!
 $end
 #25
-0&
-0"
-b0 '
-b0 5
-0(
-0)
-0$
-0#
-0!
-1%
-1*
-#50
-0*
-#60
-b100 +
-b100 ,
-#75
-1"
-b11 '
-b11 5
-1(
-1)
-1$
 0%
-1*
-#80
-b0 +
-b0 ,
-#100
-0*
-#125
-1&
-0"
-b0 '
-b0 5
+b0 &
+b0 4
+0'
 0(
+0#
+0"
+0!
+1$
+1)
+#50
 0)
+#60
+b100 *
+b100 +
+#75
+b11 &
+b11 4
+1'
+1(
+1#
 0$
-1*
+1)
+#80
+b0 *
+b0 +
+#100
+0)
+#125
+1%
+b0 &
+b0 4
+0'
+0(
+0#
+1)
 #150
-0*
+0)
 #175
-1*
+1)
 #200
-0*
+0)
 #225
-1*
+1)
 #250
-0*
+0)
 #275
-1*
-#300
-0*
-#325
-1*
-#350
-0*
-#375
-1*
-#400
-0*
-#425
-1*
-#450
-0*
-#475
-1*
-#500
-0*
-#525
-1*
-#550
-0*
-#575
-1*
-#600
-0*
-#625
-1*
-#650
-0*
-#675
-1*
-#700
-0*
-#725
-1*
-#750
-0*
-#775
-1*
-#800
-0*
-#825
-1*
-#850
-0*
-#875
-1*
-#900
-0*
-#925
-1*
-#950
-0*
-#975
-1*
-#1000
-0*
-#1025
-1*
-#1050
-0*
-#1075
-1*
-#1100
-0*
-#1125
-1*
-#1150
-0*
-#1175
-1*
-#1200
-0*
-#1225
-1*
-#1250
-0*
-#1275
-1*
-#1300
-0*
-#1325
-1*
-#1350
-0*
-#1375
-1*
-#1400
-0*
-#1425
-1*
-#1450
-0*
-#1475
-1*
-#1500
-0*
-#1525
-1*
-#1550
-0*
-#1575
-1*
-#1600
-0*
-#1625
-1*
-#1650
-0*
-#1675
-1*
-#1700
-0*
-#1725
-1*
-#1750
-0*
-#1775
-1*
-#1800
-0*
-#1825
-1*
-#1850
-0*
-#1875
-1*
-#1900
-0*
-#1925
-1*
-#1950
-0*
-#1975
-1*
-#2000
-0*
-#2025
-1*
-#2050
-0*
-#2075
-1*
-#2080
+1)
+#280
