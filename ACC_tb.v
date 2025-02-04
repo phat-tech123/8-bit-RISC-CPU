@@ -1,13 +1,13 @@
 module ACC_tb;
 
 reg clk;
-reg regWrite;
+reg ACCwrite;
 reg [7:0] in;
 wire [7:0] out;
 
 ACC u_ACC(
 	.clk(clk),
-	.regWrite(regWrite),
+	.ACCwrite(ACCwrite),
 	.in(in),
 	.out(out)
 );
@@ -19,13 +19,13 @@ end
 
 initial begin 
 	clk = 0;
-	regWrite = 0;
+	ACCwrite = 0;
 	in = 8'b00000000;
-	regWrite = 1;
+	ACCwrite = 1;
 	#45;
 	in = 8'b10101010;
 	#40;
-	regWrite = 0;
+	ACCwrite = 0;
 	in = 8'b10000001;
 	#200;
 end
