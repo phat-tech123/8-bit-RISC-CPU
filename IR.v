@@ -1,33 +1,21 @@
 module instructionRegister(
 	input wire clk,
-	input wire [7:0] data,
-	output reg [2:0] opcode,
-	output reg [4:0] address
+	input wire [7:0] instruction,
+	input wire [7:0] data_in,
+	output reg [7:0] data_out
 );
 
-reg [2:0] counter;
+reg [7:0] DATA_1;
+reg [7:0] DATA_2;
+reg [7:0] TEMP;
 
-initial begin 
-	counter = 3'd0;
+initial begin
+	DATA_1 	<= 8'b00000000;
+	DATA_2 	<= 8'b11111111;
+	TEMP 	<= 8'b10101010; 	
 end
 
 always@(posedge clk) begin
-	if(counter == 0) begin
-		opcode <= data[7:5];
-		address <= data[4:0];
-		case(data[7:5])
-			3'b000: counter <= 3'd0;
-			3'b001: counter <= 3'd2;
-			3'b010: counter <= 3'd5;
-			3'b011: counter <= 3'd5;
-			3'b100: counter <= 3'd5;
-			3'b101: counter <= 3'd5;
-			3'b110: counter <= 3'd4;
-			3'b111: counter <= 3'd3;
-			default: counter <= 3'd0;
-		endcase
-	end else
-		counter <= counter - 1;
+	if()	
 end
-
 endmodule
