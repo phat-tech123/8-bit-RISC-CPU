@@ -8,10 +8,10 @@ module ALU(
 
 always@(*) begin
 	case(ALU_Op)
-		2'b00: out = inA + inB;
-		2'b01: out = inA & inB;
-		2'b10: out = inA ^ inB;
-		default: out = 8'b0;
+		2'b00: out = out;
+		2'b01: out = inA + inB;
+		2'b10: out = inA & inB;
+		2'b11: out = inA ^ inB;
 	endcase
 	isZero = (out == 0) ? 1 : 0;
 end
