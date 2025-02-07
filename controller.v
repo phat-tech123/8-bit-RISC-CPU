@@ -20,7 +20,7 @@ localparam LDA = 3'b101;
 localparam STO = 3'b110;
 localparam JMP = 3'b111;
 
-always@(posedge clk) begin
+always@(negedge clk) begin
 	case(opcode)
 		HLT: begin
 			jump 		<= 1'b0; 
