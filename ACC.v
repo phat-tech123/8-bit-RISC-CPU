@@ -5,8 +5,14 @@ module ACC(
 	output reg [7:0] out
 );
 
+reg ACCwriteTEMP;
+
 always@(posedge clk) begin
-	if(ACCwrite)
+	ACCwriteTEMP = ACCwrite;
+end
+
+always@(posedge clk) begin
+	if(ACCwriteTEMP)
 		out <= in;
 	else
 		out <= out;
