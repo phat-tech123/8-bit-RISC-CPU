@@ -77,7 +77,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 - **FPGA Development Kit** (Arty-Z7)
 - **HDL Simulator** (Vivado)
 
-### Build & Run
+### Build & Run using iverilog 
 1. Clone the repository:
    ```sh
    git clone https://github.com/phat-tech123/RISC-CPU.git
