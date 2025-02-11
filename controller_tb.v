@@ -7,8 +7,8 @@ wire skip;
 wire memWrite;
 wire memRead;
 wire ACCwrite;
-wire ALUToACC;
-wire [1:0 ]ALU_OP; 
+wire ALUtoACC;
+wire [1:0]ALU_OP; 
 wire Halt;
 
 controller u_controller(.*);

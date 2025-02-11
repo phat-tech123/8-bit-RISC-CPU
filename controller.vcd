@@ -1,5 +1,5 @@
 $date
-	Fri Feb  7 23:04:03 2025
+	Tue Feb 11 17:38:17 2025
 $end
 $version
 	Icarus Verilog
@@ -13,8 +13,8 @@ $var wire 1 " memWrite $end
 $var wire 1 # memRead $end
 $var wire 1 $ jump $end
 $var wire 1 % Halt $end
-$var wire 2 & ALU_OP [1:0] $end
-$var wire 1 ' ALUToACC $end
+$var wire 1 & ALUtoACC $end
+$var wire 2 ' ALU_OP [1:0] $end
 $var wire 1 ( ACCwrite $end
 $var reg 1 ) clk $end
 $var reg 3 * opcode [2:0] $end
@@ -30,8 +30,8 @@ $var parameter 3 1 SKZ $end
 $var parameter 3 2 STO $end
 $var parameter 3 3 XOR $end
 $var reg 1 ( ACCwrite $end
-$var reg 1 ' ALUToACC $end
 $var reg 2 4 ALU_OP [1:0] $end
+$var reg 1 & ALUtoACC $end
 $var reg 1 % Halt $end
 $var reg 1 $ jump $end
 $var reg 1 # memRead $end
@@ -58,13 +58,13 @@ b1 +
 b1 *
 0)
 0(
-0'
-b0 &
+b0 '
+0&
 0%
-1$
+0$
 0#
 0"
-0!
+1!
 $end
 #25
 1)
@@ -80,7 +80,7 @@ b0 *
 b0 +
 #100
 1%
-0$
+0!
 0)
 #125
 1)

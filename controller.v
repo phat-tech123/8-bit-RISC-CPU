@@ -6,7 +6,7 @@ module controller(
  	output reg memWrite,
 	output reg memRead,	
 	output reg ACCwrite,
-	output reg ALUToACC,
+	output reg ALUtoACC,
 	output reg [1:0] ALU_OP,
 	output reg Halt
 );
@@ -20,6 +20,7 @@ localparam LDA = 3'b101;
 localparam STO = 3'b110;
 localparam JMP = 3'b111;
 
+
 always@(negedge clk) begin
 	case(opcode)
 		HLT: begin
@@ -28,17 +29,17 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b0;
 			ACCwrite 	<= 1'b0;
-			ALUToACC 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
 			Halt 		<= 1'b1;
 		end
 		SKZ: begin
-			jump 		<= 1'b1;
-			skip 		<= 1'b0;
+			jump 		<= 1'b0;
+			skip 		<= 1'b1;
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b0;
 			ACCwrite 	<= 1'b0;
-			ALUToACC 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
 			Halt 		<= 1'b0;
 		end
@@ -48,7 +49,7 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b1;
 			ACCwrite 	<= 1'b1;
-			ALUToACC 	<= 1'b1;
+			ALUtoACC 	<= 1'b1;
 			ALU_OP 		<= 2'b01;
 			Halt 		<= 1'b0;
 		end
@@ -58,7 +59,7 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b1;
 			ACCwrite 	<= 1'b1;
-			ALUToACC 	<= 1'b1;
+			ALUtoACC 	<= 1'b1;
 			ALU_OP 		<= 2'b10;
 			Halt 		<= 1'b0;
 		end
@@ -68,7 +69,7 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b1;
 			ACCwrite 	<= 1'b1;
-			ALUToACC 	<= 1'b1;
+			ALUtoACC 	<= 1'b1;
 			ALU_OP 		<= 2'b11;
 			Halt 		<= 1'b0;
 		end
@@ -78,7 +79,7 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b1;
 			ACCwrite 	<= 1'b1;
-			ALUToACC 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
 			Halt 		<= 1'b0;
 		end
@@ -88,21 +89,31 @@ always@(negedge clk) begin
 			memWrite 	<= 1'b1;
 			memRead 	<= 1'b0;
 			ACCwrite 	<= 1'b0;
-			ALUToACC 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
 			Halt 		<= 1'b0;
 		end
 		JMP: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b1;
+			jump 		<= 1'b1;
+			skip 		<= 1'b0;
 			memWrite 	<= 1'b0;
 			memRead 	<= 1'b0;
 			ACCwrite 	<= 1'b0;
-			ALUToACC 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
 			ALU_OP 		<= 2'b00;
 			Halt 		<= 1'b0;
-
+		end
+		default: begin
+			jump 		<= 1'b0;
+			skip 		<= 1'b0;
+			memWrite 	<= 1'b0;
+			memRead 	<= 1'b0;
+			ACCwrite 	<= 1'b0;
+			ALUtoACC 	<= 1'b0;
+			ALU_OP 		<= 2'b00;
+			Halt 		<= 1'b0;
 		end
 	endcase
 end
 endmodule
+
