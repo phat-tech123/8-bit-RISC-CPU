@@ -7,6 +7,10 @@ module ACC(
 
 reg ACCwriteTEMP;
 
+initial begin
+	out = 8'd0;
+end
+
 always@(posedge clk) begin
 	ACCwriteTEMP = ACCwrite;
 end
@@ -19,3 +23,5 @@ always@(posedge clk) begin
 end
 
 endmodule
+
+
