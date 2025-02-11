@@ -10,10 +10,8 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 - **Program Counter**: Stores the program address register.
 - **Address Mux**: Selects between program and instruction addresses.
 - **Memory**: Stores and provides program data.
-- **Instruction Register**: Processes instruction data.
 - **Accumulator Register**: Handles data from the ALU.
 - **ALU (Arithmetic Logic Unit)**: Processes data from Memory, Accumulator, and Instruction opcode.
-- **Testbenches**: Each component must have an associated testbench.
 
 ### **System Functionality**
 1. Fetch instructions from Memory.
@@ -76,10 +74,8 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 
 ## Getting Started
 ### Prerequisites
-- **FPGA Development Kit** (e.g., Arty-Z7)
-- **HDL Simulator** (e.g., ModelSim, Quartus, Vivado)
-- **Assembler** for RISC instruction set (optional)
-- **C Compiler** for testing compiled programs (optional)
+- **FPGA Development Kit** (Arty-Z7)
+- **HDL Simulator** (Vivado)
 
 ### Build & Run
 1. Clone the repository:
@@ -89,25 +85,10 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
    ```
 2. Compile the design:
    ```sh
-   make  
+   make compile 
+   make run
    ```
-3. Run simulations:
+3. Waveform simulations:
    ```sh
-   make test
+   make wave 
    ```
-
-## Contributing
-We welcome contributions! Follow these steps:
-1. Fork the repository.
-2. Create a new branch.
-3. Commit your changes.
-4. Push to your fork and submit a pull request.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-For questions or discussions:
-- **Email:** your.email@example.com
-- **GitHub Issues:** Open an issue on this repository
-
