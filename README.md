@@ -81,7 +81,6 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 1. Clone the repository:
    ```sh
    git clone https://github.com/phat-tech123/RISC-CPU.git
-   cd RISC-CPU
    ```
 2. Compile the design:
    ```sh
