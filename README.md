@@ -92,6 +92,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ## Cadence tool
 ### Simulation using Cadence Xcelium
 #### PROGRAM 1
+   ```sh
 //opcode_operand  // addr                   assembly code
 //--------------  // ----  -----------------------------------------------
 @00 111_11110     //  00   BEGIN:   JMP TST_JMP
@@ -126,3 +127,4 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 
 @1E 111_00011     //  1E   TST_JMP: JMP JMP_OK
     000_00000     //  1F            HLT        //JMP is broken
+   ```
