@@ -73,13 +73,11 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 - Operates on the rising edge of the clock.
 
 ## Getting Started
-### Prerequisites
-- **FPGA Development Kit** (Arty-Z7)
-- **HDL Simulator** (Vivado)
 
 ### Build & Run using iverilog 
-1. Clone the repository:
+1. Preparation:
    ```sh
+   sudo apt install iverilog gtkwave
    git clone https://github.com/phat-tech123/RISC-CPU.git
    ```
 2. Compile the design:

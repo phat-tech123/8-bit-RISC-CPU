@@ -3,9 +3,9 @@
 IVERILOG = iverilog
 VVP = vvp
 GTKWAVE = gtkwave
-OUTPUT = datapath_wav
-SRC = datapath.v datapath_tb.v
-VCD_FILE = CPU.vcd
+OUTPUT = RISC_CPU
+SRC = RISC_CPU.v RISC_CPU_tb.v
+VCD_FILE = RISC_CPU.vcd
 
 all: compile run wave
 
