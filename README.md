@@ -91,7 +91,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
    ```
 ## Cadence tool
 ### Simulation using Cadence Xcelium
-#### PROGRAM 1
+#### PROGRAM 1:
 ```sh
 //opcode_operand  // addr                   assembly code
 //--------------  // ----  -----------------------------------------------
@@ -130,7 +130,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ```
 ![Program 1 Simulation Result](prog1.png)
 
-#### PROGRAM 2
+#### PROGRAM 2:
 ```sh
 //opcode_operand  // addr                   assembly code
 //--------------  // ----  -----------------------------------------------
@@ -160,7 +160,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ```
 ![Program 2 Simulation Result](prog2.png)
 
-#### PROGRAM 3
+#### PROGRAM 3:
 ```sh
 //opcode_operand  // addr                     assembly code
 //--------------  // ----  ----------------------------------------------------
@@ -191,8 +191,12 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ![Program 3 Simulation Result](prog3.png)
 
 ### Synthesis using Cadence Genus
-#### BASIC GENUS SYNTHESIS
+#### BASIC GENUS SYNTHESIS:
 ![Basic Genus Synthesis](basicSynthesis.png )
 
-#### LOW-POWER SYNTHESIS
+#### LOW-POWER SYNTHESIS:
 ![Low Power Synthesis](lowPowerSynthesis.png)
+
+
+### Logic Equivalence Check using Conformal-LEC
+![LEC with Conformal](lec.png)
