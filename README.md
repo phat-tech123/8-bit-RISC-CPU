@@ -130,3 +130,62 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ```
 ![Program 1 Simulation Result](prog1.png)
 
+#### PROGRAM 2
+```sh
+//opcode_operand  // addr                   assembly code
+//--------------  // ----  -----------------------------------------------
+    101_11011     //  00   BEGIN:  LDA DATA_2
+    011_11100     //  01           AND DATA_3 
+    100_11011     //  02           XOR DATA_2
+    001_00000     //  03           SKZ
+    000_00000     //  04           HLT         //AND doesn't work
+    010_11010     //  05           ADD DATA_1
+    001_00000     //  06           SKZ
+    111_01001     //  07           JMP ADD_OK
+    000_00000     //  08           HLT         //ADD doesn't work
+    100_11100     //  09           XOR DATA_3
+    010_11010     //  0A           ADD DATA_1  //FF plus 1 makes -1
+    110_11101     //  0B           STO TEMP
+    101_11010     //  0C           LDA DATA_1
+    010_11101     //  0D           ADD TEMP    //-1 plus 1 should make zero
+    001_00000     //  0E           SKZ
+    000_00000     //  0F           HLT         //ADD Doesn't work
+    000_00000     //  10   END:    HLT         //CONGRATULATIONS - TEST2 PASSED!
+    111_00000     //  11           JMP BEGIN   //run test again
+
+    00000001      //  1A   DATA_1:             //constant  1(hex)
+    10101010      //  1B   DATA_2:             //constant AA(hex)
+    11111111      //  1C   DATA_3:             //constant FF(hex)
+    00000000      //  1D   TEMP:
+```
+![Program 2 Simulation Result](prog2.png)
+
+#### PROGRAM 3
+```sh
+//opcode_operand  // addr                     assembly code
+//--------------  // ----  ----------------------------------------------------
+    111_00011     //  00           JMP LOOP   //jump to the address of LOOP
+    101_11011     //  03   LOOP:   LDA FN2    //load value in FN2 into accum
+    110_11100     //  04           STO TEMP   //store accumulator in TEMP
+    010_11010     //  05           ADD FN1    //add value in FN1 to accumulator
+    110_11011     //  06           STO FN2    //store result in FN2
+    101_11100     //  07           LDA TEMP   //load TEMP into the accumulator
+    110_11010     //  08           STO FN1    //store accumulator in FN1
+    100_11101     //  09           XOR LIMIT  //compare accumulator to LIMIT
+    001_00000     //  0A           SKZ        //if accum = 0, skip to DONE
+    111_00011     //  0B           JMP LOOP   //jump to address of LOOP
+    000_00000     //  0C   DONE:   HLT        //end of program
+    101_11111     //  0D   AGAIN:  LDA ONE
+    110_11010     //  0E           STO FN1
+    101_11110     //  0F           LDA ZERO
+    110_11011     //  10           STO FN2
+    111_00011     //  11           JMP LOOP   //jump to address of LOOP
+
+    00000001      //  1A   FN1:               //data storage for 1st Fib. No.
+    00000000      //  1B   FN2:               //data storage for 2nd Fib. No.
+    00000000      //  1C   TEMP:              //temproray data storage
+    10010000      //  1D   LIMIT:             //max value to calculate 144(dec)
+    00000000      //  1E   ZERO:              //constant 0(decimal)
+    00000001      //  1F   ONE:               //constant 1(decimal)
+```
+![Program 3 Simulation Result](prog3.png)
