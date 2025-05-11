@@ -92,10 +92,10 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 ## Cadence tool
 ### Simulation using Cadence Xcelium
 #### PROGRAM 1
-   ```sh
+```sh
 //opcode_operand  // addr                   assembly code
 //--------------  // ----  -----------------------------------------------
-@00 111_11110     //  00   BEGIN:   JMP TST_JMP
+    111_11110     //  00   BEGIN:   JMP TST_JMP
     000_00000     //  01            HLT        //JMP did not work at all
     000_00000     //  02            HLT        //JMP did not load PC, it skipped
     101_11010     //  03   JMP_OK:  LDA DATA_1
@@ -121,10 +121,12 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
     000_00000     //  17   END:     HLT        //CONGRATULATIONS - TEST1 PASSED!
     111_00000     //  18            JMP BEGIN  //run test again
 
-@1A 00000000      //  1A   DATA_1:             //constant 00(hex)
+    00000000      //  1A   DATA_1:             //constant 00(hex)
     11111111      //  1B   DATA_2:             //constant FF(hex)
     10101010      //  1C   TEMP:               //variable - starts with AA(hex)
 
-@1E 111_00011     //  1E   TST_JMP: JMP JMP_OK
+    111_00011     //  1E   TST_JMP: JMP JMP_OK
     000_00000     //  1F            HLT        //JMP is broken
-   ```
+```
+![Program 1 Simulation Result](prog1.png)
+
