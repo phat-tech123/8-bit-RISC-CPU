@@ -1,119 +1,163 @@
-module controller(
-	input wire clk,
-	input wire [2:0] opcode,
-	output reg jump,
-	output reg skip,
- 	output reg memWrite,
-	output reg memRead,	
-	output reg ACCwrite,
-	output reg ALUtoACC,
-	output reg [1:0] ALU_OP,
-	output reg Halt
+module Controller(
+    input clk,
+    input reset,
+    input [2:0] opcode,
+    input is_zero,
+    output reg sel,
+    output reg rd,
+    output reg ld_ir,
+    output reg halt,
+    output reg inc_pc,
+    output reg ld_ac,
+    output reg ld_pc,
+    output reg wr,
+    output reg data_e
 );
-
-localparam HLT = 3'b000;
-localparam SKZ = 3'b001;
-localparam ADD = 3'b010;
-localparam AND = 3'b011;
-localparam XOR = 3'b100;
-localparam LDA = 3'b101;
-localparam STO = 3'b110;
-localparam JMP = 3'b111;
-
-
-always@(negedge clk) begin
-	case(opcode)
-		HLT: begin
-			jump 		<= 1'b0; 
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b0;
-			ACCwrite 	<= 1'b0;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b1;
-		end
-		SKZ: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b1;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b0;
-			ACCwrite 	<= 1'b0;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b0;
-		end
-		ADD: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b1;
-			ACCwrite 	<= 1'b1;
-			ALUtoACC 	<= 1'b1;
-			ALU_OP 		<= 2'b01;
-			Halt 		<= 1'b0;
-		end
-		AND: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b1;
-			ACCwrite 	<= 1'b1;
-			ALUtoACC 	<= 1'b1;
-			ALU_OP 		<= 2'b10;
-			Halt 		<= 1'b0;
-		end
-		XOR: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b1;
-			ACCwrite 	<= 1'b1;
-			ALUtoACC 	<= 1'b1;
-			ALU_OP 		<= 2'b11;
-			Halt 		<= 1'b0;
-		end
-		LDA: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b1;
-			ACCwrite 	<= 1'b1;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b0;
-		end
-		STO: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b1;
-			memRead 	<= 1'b0;
-			ACCwrite 	<= 1'b0;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b0;
-		end
-		JMP: begin
-			jump 		<= 1'b1;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b0;
-			ACCwrite 	<= 1'b0;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b0;
-		end
+    // Các tr?ng thái
+    parameter INST_ADDR = 0;
+    parameter INST_FETCH = 1;
+    parameter INST_LOAD = 2;
+    parameter IDLE = 3;
+    parameter OP_ADDR = 4;
+    parameter OP_FETCH = 5;
+    parameter ALU_OP = 6;
+    parameter STORE = 7;
+    
+    reg [2:0] state;
+    always @(posedge clk, posedge reset) begin
+        if (reset) begin
+            state <= INST_ADDR;
+            sel <= 0;
+            rd <= 0;
+            ld_ir <= 0;
+            halt <= 0;
+            inc_pc <= 0;
+            ld_ac <= 0;
+            ld_pc <= 0;
+            wr <= 0;
+            data_e <= 0;
+        end
+        else begin
+            case(state)
+                INST_ADDR: begin
+                    sel <= 1;
+                    rd <= 0;
+                    ld_ir <= 0;
+                    halt <= 0;
+                    inc_pc <= 0;
+                    ld_ac <= 0;
+                    ld_pc <= 0;
+                    wr <= 0;
+                    data_e <= 0;
+                    state <= INST_FETCH;
+                end
+                
+                INST_FETCH: begin
+                    sel<=1;
+                    rd <= 1;
+                    ld_ir <= 0;
+                    halt <= 0;
+                    inc_pc <= 0;
+                    ld_ac <= 0;
+                    ld_pc <= 0;
+                    wr <= 0;
+                    data_e <= 0;
+                    state <= INST_LOAD;
+                end
+                
+                INST_LOAD: begin
+                    sel<=1;
+                    rd <= 1;
+                    ld_ir <= 1;
+                    halt <= 0;
+                    inc_pc <= 0;
+                    ld_ac <= 0;
+                    ld_pc <= 0;
+                    wr <= 0;
+                    data_e <= 0;
+                    state <= IDLE;
+                end
+                
+                IDLE: begin
+                    sel<=1;
+                    rd <= 1;
+                    ld_ir <= 1;
+                    halt <= 0;
+                    inc_pc <= 0;
+                    ld_ac <= 0;
+                    ld_pc <= 0;
+                    wr <= 0;
+                    data_e <= 0;
+                    state <= OP_ADDR;
+                end
+                
+                OP_ADDR: begin
+                    sel<=0;
+                    rd <= 0;
+                    ld_ir <= 0;
+                    if(opcode==3'b000)begin
+                        halt<=1;
+                        state <= OP_ADDR;
+                    end
+                    else begin 
+                        inc_pc<=1;
+                        state <= OP_FETCH;
+                    end
+                    wr <= 0;
+                    data_e <= 0;
+                end
+                
+                OP_FETCH: begin
+                    sel<=0;
+                    ld_ir <= 0;
+                    inc_pc <= 0;
+                    wr <= 0;
+                    data_e <= 0;
+                    rd <= (opcode == 3'b010 || opcode == 3'b011 || 
+                          opcode == 3'b100 || opcode == 3'b101);
+                    state <= ALU_OP;
+                end
+                
+                ALU_OP: begin
+                    sel<=0;
+                    ld_ir <= 0;
+                    ld_pc <= (opcode == 3'b111);
+                    wr <= 0; 
+                    data_e <= (opcode == 3'b110);
+                    rd <= (opcode == 3'b010 || opcode == 3'b011 || 
+                          opcode == 3'b100 || opcode == 3'b101);
+                    inc_pc <= (opcode == 3'b001 && is_zero); // SKZ if zero
+                    
+                    state <= STORE;
+                end
+                
+                STORE: begin
+                    sel<=0;
+                    ld_ir <= 0;
+                    inc_pc <= 0;
+                    ld_ac <= (opcode == 3'b010 || opcode == 3'b011 || 
+                          opcode == 3'b100 || opcode == 3'b101);
+                    rd <= (opcode == 3'b010 || opcode == 3'b011 || 
+                          opcode == 3'b100 || opcode == 3'b101);
+                    ld_pc <= (opcode == 3'b111);
+                    wr <= (opcode == 3'b110); // STO
+                    data_e <= (opcode == 3'b110); // STO
+                    state <= INST_ADDR;
+                end
+		
 		default: begin
-			jump 		<= 1'b0;
-			skip 		<= 1'b0;
-			memWrite 	<= 1'b0;
-			memRead 	<= 1'b0;
-			ACCwrite 	<= 1'b0;
-			ALUtoACC 	<= 1'b0;
-			ALU_OP 		<= 2'b00;
-			Halt 		<= 1'b0;
+                    sel<=sel;
+                    ld_ir <= ld_ir;
+                    inc_pc <= inc_pc;
+                    ld_ac <=  ld_ac; 
+                    rd <= rd; 
+                    ld_pc <= ld_pc;
+                    wr <= wr; // STO
+                    data_e <= data_e; // STO
+                    state <= state;
 		end
-	endcase
-end
+            endcase
+            
+        end
+    end
 endmodule
-

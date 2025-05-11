@@ -1,27 +1,18 @@
-module ACC(
-	input wire clk,
-	input wire ACCwrite,
-	input wire [7:0] in,
-	output reg [7:0] out
+module Accumulator#( 
+    parameter WIDTH_REG = 8
+)(
+    input clk,
+    input reset,
+    input load,
+    input [WIDTH_REG - 1:0] data_in,
+    output reg [WIDTH_REG - 1:0] data_out
 );
-
-reg ACCwriteTEMP;
-
-initial begin
-	out = 8'd0;
-end
-
-always@(posedge clk) begin
-	ACCwriteTEMP = ACCwrite;
-end
-
-always@(posedge clk) begin
-	if(ACCwriteTEMP)
-		out <= in;
-	else
-		out <= out;
-end
-
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            data_out <= 8'b0;
+        else if (load)
+            data_out <= data_in;
+	else 
+  	    data_out <= data_out;
+    end
 endmodule
-
-

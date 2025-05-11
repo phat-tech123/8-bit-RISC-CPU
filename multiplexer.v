@@ -1,26 +1,21 @@
-module addressADD(
-	input wire skipSignal,
-    	input wire [4:0] address_in,
-    	output wire [4:0] address_out
+module AddressMux #(
+    parameter WIDTH = 5 
+)(
+    input sel,
+    input [WIDTH - 1:0] A,
+    input [WIDTH - 1:0] B,
+    output [WIDTH - 1:0] Z
 );
-  	assign address_out = skipSignal ? (address_in + 2) : (address_in + 1);
+    assign Z = sel ? A : B;
 endmodule
 
-module addressMUX(
-    	input wire jump,
-    	input wire [4:0] nextAddress,
-    	input wire [4:0] jumpAddress,
-    	output wire [4:0] address_out
+module DataMux #(
+    parameter WIDTH = 5 
+)(
+    input sel,
+    input [WIDTH - 1:0] A,
+    output [WIDTH - 1:0] Z
 );
-    	assign address_out = jump ? jumpAddress : nextAddress;
-endmodule
-
-module ALUmux(
-    	input wire ALUtoACC,
-    	input wire [7:0] ALUdata,
-	input wire [7:0] MemoryData,
- 	output wire [7:0] data_out
-);
-    	assign data_out = ALUtoACC ? ALUdata : MemoryData;
+    assign Z = sel ? A : 8'bz;
 endmodule
 

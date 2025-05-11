@@ -1,24 +1,21 @@
-module PC(
-    input wire clk, 
-    input wire rst, 
-    input wire [4:0] loaded_address, 
-    output reg [4:0] address
+module ProgramCounter #(
+    parameter WIDTH_ADDRESS_BIT = 5 
+)(
+    input clk,
+    input reset,
+    input load,
+    input inc,
+    input [WIDTH_ADDRESS_BIT - 1:0] data_in,
+    output reg [WIDTH_ADDRESS_BIT - 1:0] data_out
 );
-
-reg counter;
-initial begin
-	counter <= 1'b1;
-	address <= 5'd0;
-end
-
-always @(posedge clk or posedge rst) begin
-	if(rst)
-		address <= 5'd0; 
-	else if(counter == 1'b0) begin
-		address <= loaded_address; 
-		counter <= 1'b1;	
-	end else 
-		counter <= counter - 1;
-end
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            data_out <= 5'b0;
+        else if (load)
+            data_out <= data_in;
+        else if (inc)
+            data_out <= data_out + 5'b00001;
+	else
+	    data_out <= data_out;
+    end
 endmodule
-
