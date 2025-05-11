@@ -189,3 +189,10 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
     00000001      //  1F   ONE:               //constant 1(decimal)
 ```
 ![Program 3 Simulation Result](prog3.png)
+
+### Synthesis using Cadence Genus
+#### BASIC GENUS SYNTHESIS
+![Basic Genus Synthesis](basicSyntheis.png)
+
+#### LOW-POWER SYNTHESIS
+![Low Power Synthesis](lowPowerSyntheis.png)
