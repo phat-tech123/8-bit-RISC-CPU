@@ -192,7 +192,7 @@ Utilize knowledge from **HDL logic design** and related subjects to design a sim
 
 ### Synthesis using Cadence Genus
 #### BASIC GENUS SYNTHESIS
-![Basic Genus Synthesis](basicSyntheis.png)
+![Basic Genus Synthesis](basicSynthesis.png )
 
 #### LOW-POWER SYNTHESIS
-![Low Power Synthesis](lowPowerSyntheis.png)
+![Low Power Synthesis](lowPowerSynthesis.png)
