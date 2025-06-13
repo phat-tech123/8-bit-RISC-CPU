@@ -100,7 +100,7 @@ RISC (Reduced Instruction Set Computer) is a modern processor design approach. I
     11111111      //  1C   DATA_3:             //constant FF(hex)
     00000000      //  1D   TEMP:
 ```
-![Program 2 Simulation Result](prog2.png)
+![Program 2 Simulation Result](Picture/prog2.png)
 
 #### PROGRAM 3:
 ```sh

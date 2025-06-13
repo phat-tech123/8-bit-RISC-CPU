@@ -28,8 +28,8 @@ module RICS_CPU_tb;
 	$dumpvars(0, RICS_CPU_tb);
     end
     initial begin
-        $monitor("Time=%0t PC=%h Opcode=%b Operand=%d Acc=%d", 
-                 $time, cpu.pc_out, cpu.opcode, cpu.operand, cpu.acc_out);
+        $monitor("Time=%0t PC=%h Opcode=%b Operand=%d Acc=%d state=%d" , 
+                 $time, cpu.pc_out, cpu.opcode, cpu.operand, cpu.acc_out, cpu.ctrl.state);
     end
 
 endmodule
