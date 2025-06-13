@@ -1,12 +1,3 @@
-/*
-`include "multiplexer.v"
-`include "PC.v"
-`include "Memory.v"
-`include "InstructionRegister.v"
-`include "ALU.v"
-`include "ACC.v"
-`include "controller.v"
-*/
 module RICS_CPU #( 
     parameter OPCODE = 3,
     parameter WIDTH_REG = 8
