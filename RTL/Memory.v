@@ -15,7 +15,7 @@ module Memory #(
     
     // Initialize memory with the assembly program
     initial begin
-        $readmemb("PROG1.bin",mem); 
+	    $readmemb("RTL/../Program/PROG1.bin",mem);
     end
 
     always @(posedge clk) begin

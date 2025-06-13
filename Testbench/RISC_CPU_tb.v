@@ -24,7 +24,7 @@ module RICS_CPU_tb;
 	    
     // Theo dõi các tín hi?u quan tr?ng
     initial begin
-	$dumpfile("RISC_CPU.vcd");
+	$dumpfile("Output/RISC_CPU.vcd");
 	$dumpvars(0, RICS_CPU_tb);
     end
     initial begin
