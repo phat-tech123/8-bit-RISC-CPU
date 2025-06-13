@@ -70,7 +70,7 @@ RISC (Reduced Instruction Set Computer) is a modern processor design approach. I
     111_00011     //  1E   TST_JMP: JMP JMP_OK
     000_00000     //  1F            HLT        //JMP is broken
 ```
-![Program 1 Simulation Result](prog1.png)
+![Program 1 Simulation Result](Picture/prog1.png)
 
 #### PROGRAM 2:
 ```sh
@@ -130,13 +130,13 @@ RISC (Reduced Instruction Set Computer) is a modern processor design approach. I
     00000000      //  1E   ZERO:              //constant 0(decimal)
     00000001      //  1F   ONE:               //constant 1(decimal)
 ```
-![Program 3 Simulation Result](prog3.png)
+![Program 3 Simulation Result](Picture/prog3.png)
 
 ### Synthesis using Cadence Genus
 #### BASIC GENUS SYNTHESIS:
-![Basic Genus Synthesis](basicSynthesis.png )
+![Basic Genus Synthesis](Picture/basicSynthesis.png )
 #### LOW-POWER SYNTHESIS:
-![Low Power Synthesis](lowPowerSynthesis.png)
+![Low Power Synthesis](Picture/lowPowerSynthesis.png)
 
 ### LOGIC EQUIVALENCE CHECK using Conformal-LEC
-![LEC with Conformal](lec.png)
+![LEC with Conformal](Picture/lec.png)
