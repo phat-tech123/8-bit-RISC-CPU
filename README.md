@@ -1,4 +1,4 @@
-# Simple RISC CPU Design
+# 8 bit RISC CPU 
 
 ## Introduction
 RISC (Reduced Instruction Set Computer) is a modern processor design approach. In this project, we design a simple RISC CPU with a **3-bit opcode** and **5-bit operand**, allowing for **8 instruction types** and **32 address spaces**. The processor operates based on clock and reset signals and halts execution upon receiving the HALT signal.
