@@ -14,6 +14,9 @@ RISC (Reduced Instruction Set Computer) is a modern processor design approach. I
 | STO | 110 | Store Accumulator value into Memory |
 | JMP | 111 | Unconditional jump to target address |
 
+## Architechture
+![Block Diagram](Picture/Architecture.png)
+
 ## Simple Run on Termial
 
 ### Build & Run using iverilog 
